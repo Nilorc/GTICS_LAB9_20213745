@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeleMeal - Categories</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+      .card {
+        border: none;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+      }
+      .search-bar {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+      .search-bar input {
+        width: 50%;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .search-bar button {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>TELEMEAL</h1>
+      <div class="search-bar">
+        <input type="text" placeholder="Search for a meal..." class="form-control">
+        <button class="btn btn-primary">Search</button>
+      </div>
+      <div class="row">
+        <div class="col-md-4 mb-4" th:each="category : ${categorias}">
+          <div class="card h-100">
+
+            <div class="card-body text-center">
+              <h5 class="card-title font-weight-bold" th:text="${category.strCategory}"></h5>
+              <img th:src="${category.strCategoryThumb}" class="card-img-top" alt="Category Image">
+              <p class="card-text" th:text="${category.strCategoryDescription}"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
