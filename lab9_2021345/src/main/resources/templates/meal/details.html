@@ -12,6 +12,13 @@
       <div class="row mt-4">
         <div class="col-md-4">
           <img th:src="@{${meal.strMealThumb}}" class="img-fluid" alt="Meal Image">
+          <form action="/favorites/add" method="post" class="mt-3">
+            <input type="hidden" name="mealId" th:value="${meal.idMeal}">
+            <button type="submit" class="btn btn-primary" id="addToFavoriteBtn"
+                    th:if="${favoriteAdded == null || !favoriteAdded}"> ☆ Add to favorite</button>
+            <button type="button" class="btn btn-success" disabled
+                    th:if="${favoriteAdded != null && favoriteAdded}">Favorite</button>
+          </form>
         </div>
         <div class="col-md-8">
           <h2 th:text="${meal.strMeal}"></h2>
@@ -26,10 +33,40 @@
           </ul>
         </div>
       </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="favoriteModal" tabindex="-1" aria-labelledby="favoriteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="favoriteModalLabel">Congratulations!</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              You added this meal to favorites.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="window.location.reload()">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Script para ver el modal -->
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      if ([[${favoriteAdded}]] != null && [[${favoriteAdded}]] === true) {
+        $(document).ready(function () {
+          $('#favoriteModal').modal('show');
+        });
+      }
+      /*]]>*/
+    </script>
   </body>
 </html>

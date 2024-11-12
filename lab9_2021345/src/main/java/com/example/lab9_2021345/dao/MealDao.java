@@ -4,11 +4,17 @@ import com.example.lab9_2021345.entity.Category;
 import com.example.lab9_2021345.entity.CategoriesResponse;
 import com.example.lab9_2021345.entity.Meal;
 import com.example.lab9_2021345.entity.MealResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import java.lang.reflect.Field;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -54,6 +60,22 @@ public class MealDao {
         }
 
         return meal;
+    }
+
+    //añadir la receta en una base de datos que almacena los favoritos
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    // Añadir la receta en una base de datos que almacena los favoritos
+    public void addMealToFavorites(Meal meal) {
+        String sql = "INSERT INTO favorites (meal_id, meal_name, category, area, image_url) VALUES (?, ?, ?, ?, ?)";
+
+        jdbcTemplate.update(sql,
+                meal.getIdMeal(),
+                meal.getStrMeal(),
+                meal.getStrCategory(),
+                meal.getStrArea(),
+                meal.getStrMealThumb());
     }
 
 }
